@@ -20,7 +20,13 @@ setopt MENU_COMPLETE
 
 # "Power Options"
 setopt autocd
+setopt appendhistory
 setopt extended_glob
+
+unsetopt beep 
+unsetopt notify
+
+
 
 autoload -zU compinit
 compinit
@@ -37,6 +43,7 @@ zstyle ':completion::prefix-1:*' completer _complete
 zstyle ':completion:predict:*' completer _complete
 zstyle ':completion:incremental:*' completer _complete _correct
 zstyle ':completion:*' completer _complete _prefix _correct _prefix _match _approximate
+zstyle ':completion:*' matcher-list '' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*' 'm:{[:lower:]}={[:upper:]}'
 
 # Path Expansion
 zstyle ':completion:*' expand 'yes'
