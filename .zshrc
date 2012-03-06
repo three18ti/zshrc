@@ -84,25 +84,45 @@ alias ec='emacsclient -n -a emacs'
 
 #show git branch info
 
-setopt prompt_subst
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' actionformats \
-    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
-zstyle ':vcs_info:*' formats       \
-    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
-zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+#setopt prompt_subst
+#autoload -Uz vcs_info
+#zstyle ':vcs_info:*' actionformats \
+#    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+#zstyle ':vcs_info:*' formats       \
+#    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
+#zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
 
-zstyle ':vcs_info:*' enable git cvs svn
+#zstyle ':vcs_info:*' enable git cvs svn
 
 # or use pre_cmd, see man zshcontrib
-vcs_info_wrapper() {
-  vcs_info
-  if [ -n "$vcs_info_msg_0_" ]; then
-    echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
-  fi
-}
-RPROMPT=$'$(vcs_info_wrapper)'
-
+#vcs_info_wrapper() {
+#  vcs_info
+#  if [ -n "$vcs_info_msg_0_" ]; then
+#    echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
+#  fi
+#}
 
 autoload -U colors && colors
+
+# Allow for functions in the prompt.
+setopt PROMPT_SUBST
+ 
+# Autoload zsh functions.
+fpath=(~/.zsh/functions $fpath)
+autoload -U ~/.zsh/functions/*(:t)
+ 
+# Enable auto-execution of functions.
+typeset -ga preexec_functions
+typeset -ga precmd_functions
+typeset -ga chpwd_functions
+ 
+# Append git functions needed for prompt.
+preexec_functions+='preexec_update_git_vars'
+precmd_functions+='precmd_update_git_vars'
+chpwd_functions+='chpwd_update_git_vars'
+ 
+# Set the prompt.
+RPROMPT=$'%{${fg[cyan]}%}%B%~%b$(prompt_git_info)%{${fg[default]}%} '
+
 PROMPT="%{%(#~$fg[red]~$fg[blue])%}%n%{$fg[default]%}%{$reset_color%}%{$fg[blue]%}@%{$reset_color%}%{$fg[blue]%}%m:%{$reset_color%}%{$fg[brightgreen]%}%~%{$reset_color%}%(#~#~$)%{$reset_color%} "
+
