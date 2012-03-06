@@ -108,8 +108,8 @@ autoload -U colors && colors
 setopt PROMPT_SUBST
  
 # Autoload zsh functions.
-fpath=(~/.zsh/functions $fpath)
-autoload -U ~/.zsh/functions/*(:t)
+#fpath=(~/.zsh/functions $fpath)
+#autoload -U ~/.zsh/functions/*(:t)
  
 # Enable auto-execution of functions.
 typeset -ga preexec_functions
@@ -125,7 +125,7 @@ chpwd_functions+='chpwd_update_git_vars'
 source ~/.zsh/git-prompt/zshrc.sh
 
 # an example prompt
-RPROMPT='%B%m%~%b$(git_super_status) %# '
+RPROMPT='$(git_super_status)'
 
 PROMPT="%{%(#~$fg[red]~$fg[blue])%}%n%{$fg[default]%}%{$reset_color%}%{$fg[blue]%}@%{$reset_color%}%{$fg[blue]%}%m:%{$reset_color%}%{$fg[brightgreen]%}%~%{$reset_color%}%(#~#~$)%{$reset_color%} "
 
