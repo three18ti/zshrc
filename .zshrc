@@ -27,7 +27,6 @@ unsetopt beep
 unsetopt notify
 
 
-
 autoload -zU compinit
 compinit
 
@@ -82,6 +81,28 @@ alias ls='ls -F --color=auto'
 alias ll='ls -lh'
 alias grep='grep --color=auto'
 alias ec='emacsclient -n -a emacs'
+
+#show git branch info
+
+setopt prompt_subst
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' actionformats \
+    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+zstyle ':vcs_info:*' formats       \
+    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+
+zstyle ':vcs_info:*' enable git cvs svn
+
+# or use pre_cmd, see man zshcontrib
+vcs_info_wrapper() {
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+    echo "%{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del"
+  fi
+}
+RPROMPT=$'$(vcs_info_wrapper)'
+
 
 autoload -U colors && colors
 PROMPT="%{%(#~$fg[red]~$fg[blue])%}%n%{$fg[default]%}%{$reset_color%}%{$fg[blue]%}@%{$reset_color%}%{$fg[blue]%}%m:%{$reset_color%}%{$fg[brightgreen]%}%~%{$reset_color%}%(#~#~$)%{$reset_color%} "
