@@ -81,6 +81,8 @@ alias ls='ls -F --color=auto'
 alias ll='ls -lh'
 alias grep='grep --color=auto'
 alias ec='emacsclient -n -a emacs'
+alias history='cat ~/.zsh_history | grep -i '
+
 
 #show git branch info
 
@@ -127,5 +129,7 @@ source ~/.zsh/git-prompt/zshrc.sh
 # an example prompt
 RPROMPT='$(git_super_status)'
 
-PROMPT="%{%(#~$fg[red]~$fg[blue])%}%n%{$fg[default]%}%{$reset_color%}%{$fg[blue]%}@%{$reset_color%}%{$fg[blue]%}%m:%{$reset_color%}%{$fg[brightgreen]%}%~%{$reset_color%}%(#~#~$)%{$reset_color%} "
+PROMPT="%{%(#~$fg[red]~$fg[cyan])%}%n%{$fg[default]%}%{$reset_color%}%{$fg[cyan]%}@%{$reset_color%}%{$fg[cyan]%}%m:%{$reset_color%}%{$fg[brightgreen]%}%~%{$reset_color%}%(#~#~$)%{$reset_color%} "
 
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
