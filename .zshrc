@@ -82,7 +82,7 @@ alias ll='ls -lh'
 alias grep='grep --color=auto'
 alias ec='emacsclient -n -a emacs'
 alias history='cat ~/.zsh_history | grep -i '
-
+alias webshare='python -m SimpleHTTPServer'
 
 #show git branch info
 
@@ -133,3 +133,5 @@ PROMPT="%{%(#~$fg[red]~$fg[cyan])%}%n%{$fg[default]%}%{$reset_color%}%{$fg[cyan]
 
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+alias vless=/usr/share/vim/vim73/macros/less.sh
